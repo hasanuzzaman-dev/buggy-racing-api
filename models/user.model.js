@@ -10,18 +10,23 @@ const userSchema = new mongoose.Schema({
 
     email: {
         type: String,
+        default: null
     },
     password: {
         type: String,
+        default: null
     },
     socialLoginId: {
-        type: String
+        type: String,
+        default: null
     },
     networkPlatform: {
-        type: String
+        type: String,
+        default: null
     },
     money: {
-        type: Number
+        type: Number,
+        default: null
     },
     profile: profileSchema,
     cars: [carSchema],

@@ -65,6 +65,11 @@ type Game {
     maps: [Map]
 }
 
+enum Gender{
+    Male
+    Female
+    Others
+}
 type UserInfo {
     id:ID,
     money: Float,
@@ -72,18 +77,6 @@ type UserInfo {
     # game: Game
     cars: [Car],
     maps: [Map],
-}
-
-type CustomError {
-    status: Int,
-    message: String
-
-}
-
-enum Gender{
-    Male
-    Female
-    Others
 }
 
 # input UserSignUpInput {
@@ -105,18 +98,24 @@ input UserManualSignUpInput {
 }
 
 input UserSocialSignUpInput {
-    fullName: String,
+    socialLoginId: String!,
+    fullName: String!,
     email: String,
-    gender: Gender,
-    age: String,
-    country: String,
-    networkPlatform: String
+    gender: Gender!,
+    age: Int!,
+    country: String!,
+    avatar: String,
+    networkPlatform: String!
 }
-
 
 type Query{
     hello: String
     getUserById(id: ID): User
+    manualSignIn(email: String!, password: String!): JWTToken
+    socialSignIn(socialLoginId: String!): JWTToken
+    getUserInfo: UserInfo
+    
+
     # getUserByToken()
     # getAllPosts: [Post]
     # getPost(id: ID): Post
@@ -125,7 +124,7 @@ type Query{
 type Mutation{
      manualSignUp(user: UserManualSignUpInput): JWTToken
      socialSignUp(user: UserSocialSignUpInput): JWTToken
-    #  deletePost(id: ID): String
+     deletePost(id: ID): String
     #  updatePost(id: ID, post: PostInput): Post
 }
 

@@ -8,30 +8,40 @@ const profileSchema = new mongoose.Schema({
 
     fullName: {
         type: String,
+        default: null
     },
     gender: {
         type: String,
+        default: null
     },
     age:{
-        type: Number
+        type: Number,
+        default: null
+
     },
     avatar: {
         type: String,
+        default: null
     },
     country: {
         type: String,
+        default: null
     },
     flag: {
         type: String,
+        default: null
     },
     totalPlayedGame: {
         type: Number,
+        default: null
     },
     gameWin: {
         type: Number,
+        default: null
     },
     rank: {
         type: Number,
+        default: null
     },
 
     createdAt: {

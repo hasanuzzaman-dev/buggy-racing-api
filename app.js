@@ -11,6 +11,7 @@ const typeDefs = require('./graphql/typeDefs/typeDefs');
 const resolvers = require('./graphql/resolvers/resolvers');
 const { ApolloServerErrorCode } = require('@apollo/server/errors');
 const { startStandaloneServer } = require('@apollo/server/standalone');
+const { nextHandledError, graphqlErrorHandler } = require('./helper/error-handler');
 
 
 const environment = process.env.NODE_ENV || 'dev';
@@ -31,16 +32,29 @@ async function startServer() {
         resolvers: resolvers,
         formatError: (error) => {
             const { message, extensions } = error;
-            return {
-                message,
-                code: extensions.code
-            };
+            //)
+            // console.log(message);
+            // console.log(extensions.code );
+            return graphqlErrorHandler(error);
+
+            // return {
+            //     message,
+            //     code: extensions.code
+            // };
         },
         formatResponse: (response) => {
             if (response.errors) {
                 delete response.data;
+                //delete response
             }
             return response;
+        },
+        context: ({ req }) => {
+            const token = req.headers.authorization || '';
+            return {
+                token,
+            };
+
         },
         includeStacktraceInErrorResponses: false, //to exclude stackTrace parameter from error messages
         introspection: true,

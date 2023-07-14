@@ -4,9 +4,11 @@ const mapSchema = new mongoose.Schema({
 
     unlocked: {
         type: Boolean,
+        default: null
     },
     price: {
         type: Number,
+        default: null
     },
 
     createdAt: {
