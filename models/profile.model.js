@@ -33,15 +33,15 @@ const profileSchema = new mongoose.Schema({
     },
     totalPlayedGame: {
         type: Number,
-        default: null
+        default: 0
     },
     gameWin: {
         type: Number,
-        default: null
+        default: 0
     },
     rank: {
         type: Number,
-        default: null
+        default: 0
     },
 
     createdAt: {

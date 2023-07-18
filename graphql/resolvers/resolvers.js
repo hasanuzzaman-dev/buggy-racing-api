@@ -5,7 +5,7 @@ const {
     userSocialSignIn,
 
 } = require('../../controller/authController');
-const { getUserInfo } = require('../../controller/userController');
+const { getUserInfo, updateProfile } = require('../../controller/userController');
 
 const resolvers = {
     Query: {
@@ -22,6 +22,7 @@ const resolvers = {
     Mutation: {
         manualSignUp: userManualSignUp,
         socialSignUp: userSocialSignUp,
+        updateProfile: updateProfile,
         deletePost: () => {
 
         }

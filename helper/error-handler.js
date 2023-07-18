@@ -80,7 +80,7 @@ const nextHandledError = (error) => {
         console.log("nextHandledError2");
         throw throwCustomError(error?.message, ErrorTypes.UNAUTHENTICATED);
     }
-    else if (error instanceof ApolloError) {
+    else if (error instanceof GraphQLError) {
         console.log("nextHandledError3");
         throw throwCustomError(error?.message, error?.extensions?.code);
     } 

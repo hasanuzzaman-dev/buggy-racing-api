@@ -18,7 +18,7 @@ type JWTToken {
     accessToken: String,
     refreshToken: String,
 }
-type Profile implements CommonAttributes{
+type Profile {
     id:ID,
     fullName: String,
     gender: Gender,
@@ -29,9 +29,6 @@ type Profile implements CommonAttributes{
     totalPlayedGame: Int,
     gameWin: Int,
     rank: Int,
-    createdAt: String,
-    deletedAt: String,
-    updatedAt: String
 }
 
 type Theme {
@@ -41,24 +38,19 @@ type Setting {
     setting: String
 }
 
-type Car implements CommonAttributes{
+type Car {
     id:ID,
     level: Int,
     unlocked: Boolean,
     price:Int,
     theme: Theme,
     setting: Setting,
-    createdAt: String,
-    deletedAt: String,
-    updatedAt: String
 }
-type Map implements CommonAttributes{
+type Map {
     id: ID,
     unlocked: Boolean,
     price:Int,
-    createdAt: String,
-    deletedAt: String,
-    updatedAt: String
+   
 }
 type Game {
     cars:[Car],
@@ -77,6 +69,12 @@ type UserInfo {
     # game: Game
     cars: [Car],
     maps: [Map],
+}
+
+type ResponseMessage {
+    code: Int,
+    status: String,
+    message: String,
 }
 
 # input UserSignUpInput {
@@ -108,14 +106,21 @@ input UserSocialSignUpInput {
     networkPlatform: String!
 }
 
+input UpdateProfileInput {
+    fullName: String,
+    email: String,
+    gender: Gender,
+    age: Int,
+    country: String,
+    avatar: String,
+}
+
 type Query{
     hello: String
     getUserById(id: ID): User
     manualSignIn(email: String!, password: String!): JWTToken
     socialSignIn(socialLoginId: String!): JWTToken
     getUserInfo: UserInfo
-    
-
     # getUserByToken()
     # getAllPosts: [Post]
     # getPost(id: ID): Post
@@ -125,6 +130,7 @@ type Mutation{
      manualSignUp(user: UserManualSignUpInput): JWTToken
      socialSignUp(user: UserSocialSignUpInput): JWTToken
      deletePost(id: ID): String
+     updateProfile(profile: UpdateProfileInput): ResponseMessage
     #  updatePost(id: ID, post: PostInput): Post
 }
 

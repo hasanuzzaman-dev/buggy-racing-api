@@ -27,11 +27,22 @@ const validateSocialSignIn = Joi.object({
     socialLoginId: Joi.string().required(),
 });
 
+const validateUpdateProfileSchema = Joi.object({
+    fullName: Joi.string(),
+    email: Joi.string().email().lowercase(),
+    gender: Joi.string().valid("Male", "Female", "Others"),
+    age: Joi.number().min(1),
+    country: Joi.string(),
+    avatar: Joi.string(),
+})
+
 module.exports = {
     validateManualSignUp,
     validateSocialSignUp,
     validateManualSignIn,
     validateSocialSignIn,
+    validateUpdateProfileSchema,
+
 
 
 }

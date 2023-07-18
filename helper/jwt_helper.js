@@ -48,9 +48,7 @@ module.exports = {
                 const userId = payload.aud;
                 resolve(userId);
             })
-
         })
-
 
     },
 
@@ -76,8 +74,7 @@ module.exports = {
             })
         })
     },
-
-
+    
     verifyRefreshToken: (refreshToken) => {
         return new Promise((resolve, reject) => {
             JWT.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, payload) => {
