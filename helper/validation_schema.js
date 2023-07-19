@@ -34,7 +34,26 @@ const validateUpdateProfileSchema = Joi.object({
     age: Joi.number().min(1),
     country: Joi.string(),
     avatar: Joi.string(),
-})
+});
+
+const validateAddCarSchema = Joi.object({
+    level : Joi.number().required(),
+    unlocked : Joi.boolean().required(),
+    active : Joi.boolean().required(),
+    uiIndex : Joi.number().required(),
+    price : Joi.number().required(),
+    theme : Joi.string().required(),
+    setting : Joi.string().required(),
+});
+
+const validateAddMapSchema = Joi.object({
+    unlocked : Joi.boolean().required(),
+    price : Joi.number().required(),
+    active : Joi.boolean().required(),
+    uiIndex : Joi.number().required(),
+    theme : Joi.string().required(),
+    setting : Joi.string().required(),
+});
 
 module.exports = {
     validateManualSignUp,
@@ -42,7 +61,7 @@ module.exports = {
     validateManualSignIn,
     validateSocialSignIn,
     validateUpdateProfileSchema,
-
-
+    validateAddCarSchema,
+    validateAddMapSchema
 
 }

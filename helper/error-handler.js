@@ -75,7 +75,7 @@ const nextHandledError = (error) => {
         console.log("nextHandledError1");
         const msg = `${error.details[0].message}`;
         throw throwCustomError(msg, ErrorTypes.BAD_REQUEST);
-    } 
+    }
     else if (error instanceof AuthenticationError) {
         console.log("nextHandledError2");
         throw throwCustomError(error?.message, ErrorTypes.UNAUTHENTICATED);
@@ -83,7 +83,7 @@ const nextHandledError = (error) => {
     else if (error instanceof GraphQLError) {
         console.log("nextHandledError3");
         throw throwCustomError(error?.message, error?.extensions?.code);
-    } 
+    }
     else {
         console.log("nextHandledError3");
         throw throwCustomError(error.message, ErrorTypes.BAD_REQUEST);
@@ -116,6 +116,11 @@ const graphqlErrorHandler = (error) => {
             message,
             code: ErrorTypes.PERSISTED_QUERY_NOT_SUPPORTED
         }
+    } else if (extensions.code === "INTERNAL_SERVER_ERROR") {
+        return {
+            message,
+            code: ErrorTypes.INTERNAL_SERVER_ERROR
+        }
     } else if (error instanceof GraphQLError) {
         const { code } = error.extensions;
         //console.log(code);
@@ -126,5 +131,27 @@ const graphqlErrorHandler = (error) => {
     }
 }
 
+const addSuccessMessage = (message) => {
+    return {
+        code: 200,
+        status: "ADDED",
+        message: message
+    }
+}
 
-module.exports = { throwCustomError, ErrorTypes, nextHandledError, graphqlErrorHandler };
+const updateSuccessMessage = (message) => {
+    return {
+        code: 200,
+        status: "UPDATED",
+        message: message
+    }
+}
+
+
+module.exports = {
+    throwCustomError,
+    ErrorTypes,
+    nextHandledError,
+    graphqlErrorHandler,
+    addSuccessMessage
+};

@@ -3,9 +3,14 @@ const {
     userSocialSignUp,
     userManualSignIn,
     userSocialSignIn,
-
 } = require('../../controller/authController');
-const { getUserInfo, updateProfile } = require('../../controller/userController');
+const {
+    getUserInfo,
+    updateProfile
+} = require('../../controller/userController');
+
+const { addCarByAdmin } = require("../../controller/carController");
+const { addMapByAdmin } = require('../../controller/mapController');
 
 const resolvers = {
     Query: {
@@ -14,7 +19,7 @@ const resolvers = {
         },
         manualSignIn: userManualSignIn,
         socialSignIn: userSocialSignIn,
-        getUserInfo: getUserInfo
+        getUserInfo: getUserInfo,
 
 
     },
@@ -23,6 +28,8 @@ const resolvers = {
         manualSignUp: userManualSignUp,
         socialSignUp: userSocialSignUp,
         updateProfile: updateProfile,
+        addCarByAdmin: addCarByAdmin,
+        addMapByAdmin: addMapByAdmin,
         deletePost: () => {
 
         }

@@ -4,11 +4,27 @@ const mapSchema = new mongoose.Schema({
 
     unlocked: {
         type: Boolean,
-        default: null
+        default: true
     },
     price: {
         type: Number,
-        default: null
+        default: 0,
+    },
+    active: {
+        type: Boolean,
+        default: true,
+    },
+    uiIndex: {
+        type: Number,
+        default: 1,
+    },
+    theme: {
+        type: String,
+        default: "{}",
+    },
+    setting: {
+        type: String,
+        default: "{}",
     },
 
     createdAt: {

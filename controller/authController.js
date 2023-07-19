@@ -13,6 +13,8 @@ const { ApolloError, ValidationError, AuthenticationError } = require('apollo-se
 const User = require('../models/user.model');
 const Profile = require('../models/profile.model');
 const { signAccessToken, signRefreshToken } = require('../helper/jwt_helper');
+const getAllCarForSignup = require('../repository/getAllCarForSignup');
+const getAllMapForSignup = require('../repository/getAllMapForSignup');
 
 
 module.exports = {
@@ -39,12 +41,16 @@ module.exports = {
                 createdAt: new Date().toISOString(),
 
             }
+            const cars = await getAllCarForSignup();
+            const maps = await getAllMapForSignup();
 
             const user = new User({
                 email: joiResult.email,
                 password: hashedPassword,
                 money: 0,
                 profile: profile,
+                cars: cars,
+                maps: maps,
                 createdAt: new Date().toISOString(),
 
             });
@@ -85,7 +91,9 @@ module.exports = {
                 gameWin: 0,
                 createdAt: new Date().toISOString(),
 
-            }
+            };
+            const cars = await getAllCarForSignup();
+            const maps = await getAllMapForSignup();
 
             const user = new User({
                 socialLoginId: joiResult.socialLoginId,
@@ -93,6 +101,8 @@ module.exports = {
                 money: 0,
                 profile: profile,
                 networkPlatform: joiResult.networkPlatform,
+                cars: cars,
+                maps: maps,
                 createdAt: new Date().toISOString(),
 
             });

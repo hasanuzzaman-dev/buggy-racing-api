@@ -7,15 +7,27 @@ const carSchema = new mongoose.Schema({
     },
     unlocked: {
         type: Boolean,
+        default: false,
+    },
+    active: {
+        type: Boolean,
+        default: true,
+    },
+    uiIndex: {
+        type: Number,
+        default: 1,
     },
     price: {
         type: Number,
+        default:0,
     },
     theme: {
-        type: Boolean,
+        type: String,
+        default: "{}",
     },
     setting: {
-        type: Number,
+        type: String,
+        default: "{}",
     },
 
     createdAt: {
@@ -35,4 +47,4 @@ const carSchema = new mongoose.Schema({
 
 const Car = mongoose.model('Car', carSchema);
 
-module.exports = { Map, carSchema };
+module.exports = { Car, carSchema };
