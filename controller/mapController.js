@@ -1,14 +1,14 @@
 const { nextHandledError, addSuccessMessage } = require("../helper/error-handler");
-const { validateAddMapSchema } = require("../helper/validation_schema");
-const { Map } = require("../models/map.model");
+const { validateBuggyMapSchema } = require("../helper/validation_schema");
+const { BuggyMap } = require("../models/buggyMap.model");
 const { GraphQLError } = require("graphql");
 
 module.exports = {
     addMapByAdmin: async (parent, args, context, info) => {
 
         try {
-            const joiResult = await validateAddMapSchema.validateAsync(args.map);
-            const map = new Map({ ...joiResult, createdAt: new Date().toISOString() });
+            const joiResult = await validateBuggyMapSchema.validateAsync(args.map);
+            const map = new BuggyMap({ ...joiResult, createdAt: new Date().toISOString() });
             const savedMap = await map.save();
 
             if (savedMap) {

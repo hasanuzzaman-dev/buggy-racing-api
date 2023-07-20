@@ -2,21 +2,13 @@ const mongoose = require('mongoose');
 
 const mapSchema = new mongoose.Schema({
 
-    unlocked: {
-        type: Boolean,
-        default: true
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     },
-    price: {
-        type: Number,
-        default: 0,
-    },
-    active: {
-        type: Boolean,
-        default: true,
-    },
-    uiIndex: {
-        type: Number,
-        default: 1,
+    buggyMapId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'BuggyMap'
     },
     theme: {
         type: String,

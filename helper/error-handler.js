@@ -153,5 +153,6 @@ module.exports = {
     ErrorTypes,
     nextHandledError,
     graphqlErrorHandler,
-    addSuccessMessage
+    addSuccessMessage,
+    updateSuccessMessage
 };

@@ -6,44 +6,6 @@ const mongoose = require('mongoose');
 
 const profileSchema = new mongoose.Schema({
 
-    fullName: {
-        type: String,
-        default: null
-    },
-    gender: {
-        type: String,
-        default: null
-    },
-    age:{
-        type: Number,
-        default: null
-
-    },
-    avatar: {
-        type: String,
-        default: null
-    },
-    country: {
-        type: String,
-        default: null
-    },
-    flag: {
-        type: String,
-        default: null
-    },
-    totalPlayedGame: {
-        type: Number,
-        default: 0
-    },
-    gameWin: {
-        type: Number,
-        default: 0
-    },
-    rank: {
-        type: Number,
-        default: 0
-    },
-
     createdAt: {
         type: Date,
         default: new Date().toISOString()

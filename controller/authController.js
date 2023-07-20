@@ -1,6 +1,5 @@
-const mongoose = require('mongoose');
+
 const bcrypt = require('bcrypt');
-const createError = require('http-errors');
 const {
     validateManualSignUp,
     validateSocialSignUp,
@@ -31,7 +30,10 @@ module.exports = {
 
             const hashedPassword = await bcrypt.hash(joiResult.password, 10);
 
-            const profile = {
+            const user = new User({
+                email: joiResult.email,
+                password: hashedPassword,
+                money: 0,
                 fullName: joiResult.fullName,
                 gender: joiResult.gender,
                 age: joiResult.age,
@@ -39,20 +41,6 @@ module.exports = {
                 totalPlayedGame: 0,
                 gameWin: 0,
                 createdAt: new Date().toISOString(),
-
-            }
-            const cars = await getAllCarForSignup();
-            const maps = await getAllMapForSignup();
-
-            const user = new User({
-                email: joiResult.email,
-                password: hashedPassword,
-                money: 0,
-                profile: profile,
-                cars: cars,
-                maps: maps,
-                createdAt: new Date().toISOString(),
-
             });
 
             const savedUser = await user.save();
@@ -82,14 +70,7 @@ module.exports = {
             }
 
             const profile = {
-                fullName: joiResult.fullName,
-                gender: joiResult.gender,
-                age: joiResult.age,
-                avatar: joiResult.avatar,
-                country: joiResult.country,
-                totalPlayedGame: 0,
-                gameWin: 0,
-                createdAt: new Date().toISOString(),
+              
 
             };
             const cars = await getAllCarForSignup();
@@ -101,8 +82,13 @@ module.exports = {
                 money: 0,
                 profile: profile,
                 networkPlatform: joiResult.networkPlatform,
-                cars: cars,
-                maps: maps,
+                fullName: joiResult.fullName,
+                gender: joiResult.gender,
+                age: joiResult.age,
+                avatar: joiResult.avatar,
+                country: joiResult.country,
+                totalPlayedGame: 0,
+                gameWin: 0,
                 createdAt: new Date().toISOString(),
 
             });
@@ -139,10 +125,12 @@ module.exports = {
                 throw new AuthenticationError("Username/Password not valid!");
             }
 
-            const accessToken = await signAccessToken(user.id);
-            const refreshToken = await signRefreshToken(user.id);
+            //console.log(JSON.stringify(user));
 
+            const userId = user._id;
 
+            const accessToken = await signAccessToken(userId);
+            const refreshToken = await signRefreshToken(userId);
             return { accessToken, refreshToken };
 
 

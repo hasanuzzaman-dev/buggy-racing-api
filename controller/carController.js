@@ -1,6 +1,6 @@
 const { nextHandledError, addSuccessMessage } = require("../helper/error-handler");
 const { validateAddCarSchema } = require("../helper/validation_schema");
-const { Car } = require("../models/car.model");
+const { BuggyCar} = require("../models/buggyCar.model");
 
 module.exports = {
     addCarByAdmin: async (parent, args, context, info) => {
@@ -9,7 +9,7 @@ module.exports = {
 
             const joiResult = await validateAddCarSchema.validateAsync(args.car);
 
-            const car = new Car({ ...joiResult, createdAt: new Date().toISOString() });
+            const car = new BuggyCar({ ...joiResult, createdAt: new Date().toISOString() });
 
             const savedCar = await car.save();
 

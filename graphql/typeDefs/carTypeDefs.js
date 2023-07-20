@@ -14,8 +14,6 @@ type Car {
     active: Boolean,
     uiIndex: Int,
     price:Int,
-    theme: String,
-    setting: String,
 }
 
 input CarInput {
@@ -24,8 +22,6 @@ input CarInput {
     active: Boolean,
     uiIndex: Int,
     price:Int,
-    theme: String,
-    setting: String,
 }
 
 `;

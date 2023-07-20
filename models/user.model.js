@@ -1,10 +1,4 @@
 const mongoose = require('mongoose');
-const { profileSchema } = require('./profile.model');
-const { carSchema } = require('./car.model');
-const { mapSchema } = require('./map.model');
-// const { accountSchema } = require('./account.model');
-// const { transactionSchema } = require('./transaction.model');
-
 
 const userSchema = new mongoose.Schema({
 
@@ -28,10 +22,43 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: null
     },
-    profile: profileSchema,
-    cars: [carSchema],
-    maps: [mapSchema],
+    fullName: {
+        type: String,
+        default: null
+    },
+    gender: {
+        type: String,
+        default: null
+    },
+    age: {
+        type: Number,
+        default: null
 
+    },
+    avatar: {
+        type: String,
+        default: null
+    },
+    country: {
+        type: String,
+        default: null
+    },
+    flag: {
+        type: String,
+        default: null
+    },
+    totalPlayedGame: {
+        type: Number,
+        default: 0
+    },
+    gameWin: {
+        type: Number,
+        default: 0
+    },
+    rank: {
+        type: Number,
+        default: 0
+    },
     createdAt: {
         type: Date,
         default: new Date().toISOString()

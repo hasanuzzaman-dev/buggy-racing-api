@@ -13,8 +13,7 @@ type Map {
     active: Boolean,
     uiIndex: Int,
     price:Int,
-    theme: String,
-    setting: String,
+   
 }
 
 input MapInput {
@@ -22,8 +21,7 @@ input MapInput {
     active: Boolean,
     uiIndex: Int,
     price:Int,
-    theme: String,
-    setting: String,
+    
 }
 
 `;

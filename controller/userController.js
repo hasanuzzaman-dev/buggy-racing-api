@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const User = require('../models/user.model');
 const createError = require('http-errors');
 const { verifyAccessToken } = require('../helper/jwt_helper');
-const { nextHandledError } = require('../helper/error-handler');
+const { nextHandledError, updateSuccessMessage } = require('../helper/error-handler');
 const { validateUpdateProfileSchema } = require('../helper/validation_schema');
 
 module.exports = {
@@ -47,10 +47,10 @@ module.exports = {
                 {
                     $set: {
                         'profile.fullName': (fullName !== undefined) ? fullName : joiResult.fullName,
-                        'profile.avatar': (email !== undefined) ? email : joiResult.email,
-                        'profile.avatar': (gender !== undefined) ? gender : joiResult.gender,
+                        'email': (email !== undefined) ? email : joiResult.email,
+                        'profile.gender': (gender !== undefined) ? gender : joiResult.gender,
                         'profile.age': (age !== undefined) ? age : joiResult.age,
-                        'profile.avatar': (country !== undefined) ? country : joiResult.country,
+                        'profile.country': (country !== undefined) ? country : joiResult.country,
                         'profile.avatar': (avatar !== undefined) ? avatar : joiResult.avatar,
                         'profile.updatedAt': new Date().toISOString(),
                     }
@@ -62,12 +62,8 @@ module.exports = {
                 throw nextHandledError(createError.NotFound());
             }
             //console.log(user);
-            const responseMessage = {
-                code: 200,
-                status: "UPDATED",
-                message: "Profile updated successfully!"
-            }
-            return responseMessage;
+
+            return updateSuccessMessage("Profile updated successfully!");
 
         } catch (err) {
             throw nextHandledError(err);

@@ -1,4 +1,4 @@
-const { Map } = require('../models/map.model');
+const { Map } = require('../models/buggyMap.model');
 const getAllMapForSignup = async () => {
 
     const maps = await Map.find(

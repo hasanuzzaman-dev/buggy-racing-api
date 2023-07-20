@@ -2,24 +2,13 @@ const mongoose = require('mongoose');
 
 const carSchema = new mongoose.Schema({
 
-    level: {
-        type: Number,
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     },
-    unlocked: {
-        type: Boolean,
-        default: false,
-    },
-    active: {
-        type: Boolean,
-        default: true,
-    },
-    uiIndex: {
-        type: Number,
-        default: 1,
-    },
-    price: {
-        type: Number,
-        default:0,
+    buggyCarId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'BuggyCar'
     },
     theme: {
         type: String,
