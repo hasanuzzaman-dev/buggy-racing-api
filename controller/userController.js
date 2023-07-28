@@ -4,7 +4,10 @@ const createError = require('http-errors');
 const { verifyAccessToken } = require('../helper/jwt_helper');
 const { nextHandledError, updateSuccessMessage } = require('../helper/error-handler');
 const { validateUpdateProfileSchema } = require('../helper/validation_schema');
-
+const { Car } = require("../models/car.model");
+const getUserById = require("../repository/getUserById");
+const getCarsByUserId = require('../repository/getCarsByUserId');
+const getMapsByUserId = require("../repository/getMapsByUserId");
 module.exports = {
 
     getUserInfo: async (parent, args, context, info) => {
@@ -15,18 +18,36 @@ module.exports = {
         //console.log({ userId });
 
         try {
-            const user = await User.findOne(
-                { _id: userId, deletedAt: null },
-            );
-            if (!user) {
-                throw nextHandledError(createError.NotFound());
-            }
-            console.log(user);
+
+            let user = await getUserById(userId);
+            const cars = await getCarsByUserId(userId);
+            const maps = await getMapsByUserId(userId);
+           
+            user = user.toObject();
+            user.cars = cars;
+            user.maps = maps;
+
+            console.log(user)
+
             return user;
 
         } catch (err) {
-            throw nextHandledError(err);
+            console.log(err);
         }
+
+        // try {
+        //     const user = await User.findOne(
+        //         { _id: userId, deletedAt: null },
+        //     );
+        //     if (!user) {
+        //         throw nextHandledError(createError.NotFound());
+        //     }
+        //     console.log(user);
+        //     return user;
+
+        // } catch (err) {
+        //     throw nextHandledError(err);
+        // }
 
 
     },

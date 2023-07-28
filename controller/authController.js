@@ -10,11 +10,11 @@ const { throwCustomError, ErrorTypes, nextHandledError } = require('../helper/er
 const { GraphQLError } = require('graphql');
 const { ApolloError, ValidationError, AuthenticationError } = require('apollo-server-express');
 const User = require('../models/user.model');
-const Profile = require('../models/profile.model');
 const { signAccessToken, signRefreshToken } = require('../helper/jwt_helper');
-const getAllCarForSignup = require('../repository/getAllCarForSignup');
-const getAllMapForSignup = require('../repository/getAllMapForSignup');
-
+const getAllBuggyCarForSignup = require('../repository/getAllBuggyCarForSignup');
+const getAllBuggyMapForSignup = require('../repository/getAllBuggyMapForSignup');
+const { Car } = require('../models/car.model');
+const { Map } = require('../models/map.model');
 
 module.exports = {
 
@@ -44,6 +44,33 @@ module.exports = {
             });
 
             const savedUser = await user.save();
+            const cars = await getAllBuggyCarForSignup();
+
+            let myCars = cars.map(car => {
+                let newCar = new Car({
+                    userId: savedUser.id,
+                    buggyCarId: car._id,
+                    createdAt: new Date().toISOString(),
+                })
+
+                return newCar;
+            });
+
+            const savedCar = await Car.insertMany(myCars);
+
+            const maps = await getAllBuggyMapForSignup();
+
+            let myMaps = maps.map(map => {
+                //console.log("map", map);
+                let newMap = new Map({
+                    userId: savedUser.id,
+                    buggyMapId: map._id,
+                    createdAt: new Date().toISOString(),
+                });
+                return newMap;
+            });
+
+            const savedMap = await Map.insertMany(myMaps);
 
             const accessToken = await signAccessToken(savedUser?._id?.toString());
             const refreshToken = await signRefreshToken(savedUser?.id);
@@ -68,19 +95,10 @@ module.exports = {
             if (userDoesExist) {
                 throw new ApolloError(`This user is already exist!!`, ErrorTypes.ALREADY_EXISTS);
             }
-
-            const profile = {
-              
-
-            };
-            const cars = await getAllCarForSignup();
-            const maps = await getAllMapForSignup();
-
             const user = new User({
                 socialLoginId: joiResult.socialLoginId,
                 email: joiResult.email,
                 money: 0,
-                profile: profile,
                 networkPlatform: joiResult.networkPlatform,
                 fullName: joiResult.fullName,
                 gender: joiResult.gender,
@@ -94,6 +112,32 @@ module.exports = {
             });
 
             const savedUser = await user.save();
+            const cars = await getAllBuggyCarForSignup();
+
+            let myCars = cars.map(car => {
+                let newCar = new Car({
+                    userId: savedUser.id,
+                    buggyCarId: car._id,
+                    createdAt: new Date().toISOString(),
+                })
+                return newCar;
+            });
+
+            const savedCar = await Car.insertMany(myCars);
+
+            const maps = await getAllBuggyMapForSignup();
+
+            let myMaps = maps.map(map => {
+                //console.log("map", map);
+                let newMap = new Map({
+                    userId: savedUser.id,
+                    buggyMapId: map._id,
+                    createdAt: new Date().toISOString(),
+                });
+                return newMap;
+            });
+
+            const savedMap = await Map.insertMany(myMaps);
 
             const accessToken = await signAccessToken(savedUser?._id?.toString());
             const refreshToken = await signRefreshToken(savedUser?.id);

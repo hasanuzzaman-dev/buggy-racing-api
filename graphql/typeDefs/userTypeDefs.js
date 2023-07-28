@@ -12,14 +12,7 @@ type User {
     email: String,
     password: String,
     socialLoginId: String,
-    money: String
-}
-type JWTToken {
-    accessToken: String,
-    refreshToken: String,
-}
-type Profile {
-    id:ID,
+    money: String,
     fullName: String,
     gender: Gender,
     age: Int,
@@ -29,6 +22,14 @@ type Profile {
     totalPlayedGame: Int,
     gameWin: Int,
     rank: Int,
+}
+type JWTToken {
+    accessToken: String,
+    refreshToken: String,
+}
+type Profile {
+    id:ID,
+   
 }
 
 type Map {
@@ -49,6 +50,18 @@ enum Gender{
 }
 type UserInfo {
     id:ID,
+    email: String,
+    password: String,
+    fullName: String,
+    socialLoginId: String,
+    gender: Gender,
+    age: Int,
+    avatar: String,
+    country: String,
+    flag: String,
+    totalPlayedGame: Int,
+    gameWin: Int,
+    rank: Int,
     money: Float,
     profile: Profile,
     # game: Game
