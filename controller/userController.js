@@ -22,7 +22,7 @@ module.exports = {
             let user = await getUserById(userId);
             const cars = await getCarsByUserId(userId);
             const maps = await getMapsByUserId(userId);
-           
+
             user = user.toObject();
             user.cars = cars;
             user.maps = maps;
@@ -34,21 +34,6 @@ module.exports = {
         } catch (err) {
             console.log(err);
         }
-
-        // try {
-        //     const user = await User.findOne(
-        //         { _id: userId, deletedAt: null },
-        //     );
-        //     if (!user) {
-        //         throw nextHandledError(createError.NotFound());
-        //     }
-        //     console.log(user);
-        //     return user;
-
-        // } catch (err) {
-        //     throw nextHandledError(err);
-        // }
-
 
     },
 
@@ -62,20 +47,20 @@ module.exports = {
         const joiResult = await validateUpdateProfileSchema.validateAsync(profile);
         const { fullName, email, gender, age, country, avatar } = profile;
 
+        const updateProfile = {};
+        updateProfile.fullName = (fullName !== undefined) ? fullName : joiResult.fullName;
+        updateProfile.email = (email !== undefined) ? email : joiResult.email;
+        updateProfile.gender = (gender !== undefined) ? gender : joiResult.gender;
+        updateProfile.age = (age !== undefined) ? age : joiResult.age;
+        updateProfile.country = (country !== undefined) ? country : joiResult.country;
+        updateProfile.avatar = (avatar !== undefined) ? avatar : joiResult.avatar;
+        updateProfile.updatedAt = new Date().toISOString();
+
+
         try {
             const user = await User.findOneAndUpdate(
                 { _id: userId, deletedAt: null },
-                {
-                    $set: {
-                        'profile.fullName': (fullName !== undefined) ? fullName : joiResult.fullName,
-                        'email': (email !== undefined) ? email : joiResult.email,
-                        'profile.gender': (gender !== undefined) ? gender : joiResult.gender,
-                        'profile.age': (age !== undefined) ? age : joiResult.age,
-                        'profile.country': (country !== undefined) ? country : joiResult.country,
-                        'profile.avatar': (avatar !== undefined) ? avatar : joiResult.avatar,
-                        'profile.updatedAt': new Date().toISOString(),
-                    }
-                },
+                updateProfile,
                 { new: true }
             );
 

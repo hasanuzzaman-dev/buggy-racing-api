@@ -49,7 +49,7 @@ enum Gender{
     Others
 }
 type UserInfo {
-    id:ID,
+    _id:ID,
     email: String,
     password: String,
     fullName: String,

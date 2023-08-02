@@ -8,7 +8,6 @@ const getCarsByUserId = async (userId) => {
 
     let myCars = data.map(item => {
         const { _id, buggyCarId, theme, setting } = item;
-
         let car = buggyCarId.toObject();
         car = { ...car, id: _id, theme: theme, setting: setting };
         return car;
