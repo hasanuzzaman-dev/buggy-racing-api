@@ -199,7 +199,7 @@ module.exports = {
             }
 
             const userId = user._id.toString();
-            
+
             const accessToken = await signAccessToken(userId);
             const refreshToken = await signRefreshToken(userId);
 

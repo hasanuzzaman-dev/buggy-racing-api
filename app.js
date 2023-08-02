@@ -1,7 +1,9 @@
 const express = require('express');
+const cors = require('cors')
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 dotenv.config();
+app.use(cors());
 const { ApolloServer } = require('apollo-server-express');
 const createError = require("http-errors");
 const devConfig = require('./config/dev');
