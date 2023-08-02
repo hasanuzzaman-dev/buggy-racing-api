@@ -82,6 +82,40 @@ module.exports = {
             nextHandledError(error);
         }
     },
+    userManualSignIn: async (parent, args, context, info) => {
+
+        try {
+
+            const joiResult = await validateManualSignIn.validateAsync({
+                email: args.email,
+                password: args.password
+            });
+
+            const user = await User.findOne({ email: joiResult.email });
+            if (!user) {
+                throw new AuthenticationError("User not authenticated");
+            }
+
+            const isMatch = await bcrypt.compare(joiResult.password, user.password);
+            if (!isMatch) {
+                throw new AuthenticationError("Username/Password not valid!");
+            }
+
+            //console.log(JSON.stringify(user));
+
+            const userId = user._id.toString();
+
+            const accessToken = await signAccessToken(userId);
+            const refreshToken = await signRefreshToken(userId);
+            return { accessToken, refreshToken };
+
+
+
+        } catch (error) {
+            nextHandledError(error)
+        }
+    },
+
 
     userSocialSignUp: async (parent, args, context, info, next) => {
         //console.log(JSON.stringify(info));
@@ -150,39 +184,6 @@ module.exports = {
         }
     },
 
-    userManualSignIn: async (parent, args, context, info) => {
-
-        try {
-
-            const joiResult = await validateManualSignIn.validateAsync({
-                email: args.email,
-                password: args.password
-            });
-
-            const user = await User.findOne({ email: joiResult.email });
-            if (!user) {
-                throw new AuthenticationError("User not authenticated");
-            }
-
-            const isMatch = await bcrypt.compare(joiResult.password, user.password);
-            if (!isMatch) {
-                throw new AuthenticationError("Username/Password not valid!");
-            }
-
-            //console.log(JSON.stringify(user));
-
-            const userId = user._id;
-
-            const accessToken = await signAccessToken(userId);
-            const refreshToken = await signRefreshToken(userId);
-            return { accessToken, refreshToken };
-
-
-
-        } catch (error) {
-            nextHandledError(error)
-        }
-    },
 
     userSocialSignIn: async (parent, args, context, info) => {
 
@@ -197,8 +198,10 @@ module.exports = {
                 throw new AuthenticationError("User not authenticated");
             }
 
-            const accessToken = await signAccessToken(user.id);
-            const refreshToken = await signRefreshToken(user.id);
+            const userId = user._id.toString();
+            
+            const accessToken = await signAccessToken(userId);
+            const refreshToken = await signRefreshToken(userId);
 
             return { accessToken, refreshToken };
 
